@@ -1,6 +1,9 @@
-CC = aarch64-elf-gcc
-CFLAGS = -Wall -Wextra -O2 -ffreestanding -nostdlib -nostdinc -B/usr/local/aarch64-elf/bin/aarch64-elf-
-LFLAGS = -ffreestanding -O2 -nostdlib
+ARCH = arm-none-eabi-
+CC = $(ARCH)gcc
+
+CPUFLAG = cortex-a7
+CFLAGS = -mcpu=$(CPUFLAG) -Wall -Wextra -O2 -ffreestanding -fpic -std=gnu99
+LFLAGS = -ffreestanding -nostdlib -O2
 
 KERN_SRC_DIR = ../src/kernel
 KERN_HEAD_DIR = ../inc
@@ -16,7 +19,7 @@ OBJECTS += $(patsubst $(COMMON_SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(COMMON_SRCS))
 OBJECTS += $(patsubst $(KERN_SRC_DIR)/%.S, $(OBJ_DIR)/%.o, $(ASM_SRCS))
 HEADERS = $(wildcard $(KERN_HEAD_DIR)/*.h)
 
-IMG_NAME = kernel8.img
+IMG_NAME = kernel.elf
 
 build: $(OBJECTS) $(HEADERS)
 	echo $(OBJECTS)
@@ -39,4 +42,4 @@ clean:
 	rm $(IMG_NAME)
 
 run: build
-	qemu-system-aarch64 -M raspi3 -kernel $(IMG_NAME) -serial stdio
+	qemu-system-arm -M raspi2 -kernel $(IMG_NAME) -serial stdio -m 256
