@@ -15,7 +15,8 @@ typedef struct {
             uint32_t break_err   :1;
             uint32_t overrun_err :1;
             uint32_t reserved1   :19;
-        }
+        };
+    };
 } UART0_DR;
 
 typedef struct {
@@ -26,9 +27,8 @@ typedef struct {
             uint32_t parity_err  :1;
             uint32_t break_err   :1;
             uint32_t overrun_err :1;
-        }
-    }
-    
+        };
+    };
 } UART0_RSRECR;
 
 typedef struct {
@@ -43,8 +43,8 @@ typedef struct {
             uint32_t rx_full       :1;
             uint32_t tx_empty      :1;
             uint32_t reserved2     :24;
-        }
-    }
+        };
+    };
 } UART0_FR;
 
 typedef struct {
@@ -53,8 +53,8 @@ typedef struct {
         struct {
             uint32_t data       :16;
             uint32_t reserved1  :16;
-        }
-    }
+        };
+    };
 } UART0_IBRD;
 
 typedef struct {
@@ -63,8 +63,8 @@ typedef struct {
         struct {
             uint32_t data     :6;
             uint32_t reserved :26;
-        }
-    }
+        };
+    };
 } UART0_FBRD;
 
 typedef struct {
@@ -79,8 +79,8 @@ typedef struct {
             uint32_t word_len     :2;
             uint32_t stick_parity :1;
             uint32_t reserved1    :24;
-        }
-    }
+        };
+    };
 } UART0_LCRH;
 
 typedef struct {
@@ -99,8 +99,8 @@ typedef struct {
             uint32_t rts_en     :1;
             uint32_t cts        :1;
             uint32_t reserved2  :16;
-        }
-    }
+        };
+    };
 } UART0_CR;
 
 typedef struct {
@@ -110,8 +110,8 @@ typedef struct {
             uint32_t tx_ifl_sel :3;
             uint32_t rx_ifl_sel :3;
             uint32_t reserved1  :26;
-        }
-    }
+        };
+    };
 } UART0_IFLS;
 
 typedef struct {
@@ -130,8 +130,8 @@ typedef struct {
             uint32_t be  :1;
             uint32_t oe  :1;
             uint32_t reserved1 :21;
-        }
-    }
+        };
+    };
 } UART0_INT_REG;
 
 typedef struct {
@@ -141,8 +141,8 @@ typedef struct {
             uint32_t itcr0  :1;
             uint32_t itcr1  :1;
             uint32_t reserved1 :30;
-        }
-    }
+        };
+    };
 } UART0_ITCR;
 
 typedef struct {
@@ -153,8 +153,8 @@ typedef struct {
             uint32_t reserved1 :2;
             uint32_t itip3     :1;
             uint32_t reserved2 :28;
-        }
-    }
+        };
+    };
 } UART0_ITIP;
 
 typedef struct {
@@ -172,9 +172,8 @@ typedef struct {
             uint32_t itop10    :1;
             uint32_t itop11    :1;
             uint32_t reserved3 :20;           
-        }
-    }
-
+        };
+    };
 } UART0_ITOP;
 
 typedef struct {
@@ -183,8 +182,8 @@ typedef struct {
         struct {
             uint32_t tdr10_0    :11;
             uint32_t reserved   :21;
-        }
-    }
+        };
+    };
 } UART0_TDR;
 
 struct UART0 {
