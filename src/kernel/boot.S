@@ -3,6 +3,7 @@
 .globl _start
 
 _start:
+    // TODO: stop all but one cpu on reset
     // setup the stack starting at 0x8000
     mov sp, #0x8000
 

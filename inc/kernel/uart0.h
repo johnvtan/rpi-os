@@ -186,7 +186,7 @@ typedef struct {
     };
 } UART0_TDR;
 
-struct UART0 {
+typedef struct {
     // 0x00
     UART0_DR      data;     
     // 0x04    
@@ -229,6 +229,6 @@ struct UART0 {
     UART0_ITOP    test_output;
     //0x8C
     UART0_TDR     test_data;
-};
+} UART0_PERIPH;
 
 #endif
