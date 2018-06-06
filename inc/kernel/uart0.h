@@ -231,4 +231,8 @@ typedef struct {
     UART0_TDR     test_data;
 } UART0_PERIPH;
 
+int uart0_init(void);
+void uart_putc(unsigned char c);
+void uart_puts(const char *str);
+
 #endif

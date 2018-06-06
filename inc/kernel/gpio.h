@@ -29,7 +29,7 @@ typedef struct {
 // represent it with just a uint32_t, but if it refers to the last 22, then we have
 // some reserved bits.
 typedef struct {
-    uint32_t gpio_val;
+    uint32_t val;
 } GPIO_GENERAL_0;
 
 typedef struct {
