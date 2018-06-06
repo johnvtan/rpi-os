@@ -2,23 +2,26 @@
 #include <kernel/uart0.h>
 #include <kernel/gpio.h>
 
-// delay function 
+// delay function - taken from OSDEV tutorial
 static inline void delay(uint32_t count) {
     asm volatile("__delay_%=: subs %[count], %[count], #1; bne __delay_%=\n" : "=r"(count): [count]"0"(count) : "cc");
 }
 
+// puts char onto UART0 FIFO. Waits until not busy, then dumps byte.
 void uart_putc(unsigned char c) {
     volatile UART0_PERIPH * const uart0 = (volatile UART0_PERIPH *)UART0_BASE_ADDR;
     while (uart0->flags.busy) { }
     uart0->data.data = c;
 }
 
+// Uses uart_putc to output a string
 void uart_puts(const char *str) {
     for (size_t i = 0; str[i] != '\0'; i++) {
         uart_putc((unsigned char)str[i]);
     }
 }
 
+// initialization sequence for uart0 - must be called before uart_puts/putc is called
 int uart0_init(void) {
     volatile UART0_PERIPH * const uart0 = (volatile UART0_PERIPH *)UART0_BASE_ADDR;
     volatile GPIO_PERIPH * const gpio = (volatile GPIO_PERIPH *)GPIO_BASE_ADDR;
