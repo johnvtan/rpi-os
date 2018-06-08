@@ -6,7 +6,7 @@
 void *memset(void *s, int c, size_t n);
 void *memcpy(void *dst, void *src, size_t n);
 int strlen(const char *s);
-int strcmp(const char *s1, const char *s2);
+int strncmp(const char *s1, const char *s2, size_t n);
 unsigned int strtonum(const char *str, const char **endptr);
 int strlcat(char *dst, const char *src, int maxsize);
 

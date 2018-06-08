@@ -2,8 +2,11 @@
 #include <stdint.h>
 
 #include <kernel/uart0.h>
+#include <common/testing.h>
 
 void kernel_main(void) {
     uart0_init();
-    uart_puts("Hello, world!");
+    if (!test_strings()) {
+        uart_puts("All tests passed\n\r");
+    }
 }
