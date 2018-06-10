@@ -35,6 +35,15 @@ int test_strings(void) {
         }
     }
 
+    if (123 != strtonum("123", &s2_ptr)) {
+        uart_puts("atoui(\"123\") failed");
+        ++fail_count;
+    }
+
+    if (0xABC != strtonum("0xABC", &s2_ptr)) {
+        uart_puts("atoui(0xABC) failed");
+        ++fail_count;
+    }
     return fail_count;
 }
 
