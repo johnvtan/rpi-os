@@ -34,19 +34,30 @@ int test_strings(void) {
             break;
         }
     }
-
+    /*
     if (123 != strtonum("123", &s2_ptr)) {
-        uart_puts("atoui(\"123\") failed");
+        uart_puts("atoui(\"123\") failed\n\r");
         ++fail_count;
     }
 
+    
     if (0xABC != strtonum("0xABC", &s2_ptr)) {
         uart_puts("atoui(0xABC) failed");
         ++fail_count;
     }
+    
+    if (0xFFF != strtonum("0xFFF", &s2_ptr)) {
+        uart_puts("wtf\n\r");
+        ++fail_count;
+    }
+    */
 
+    /*
     uart_puts(numtostr(strtonum("0xABC", &s2_ptr), s2_ptr, 4));
     uart_putc('\n');
+    */
+    snprintf(s2_ptr, 8, "HELLO%d\n", 10);
+    uart_puts(s2_ptr);
     return fail_count;
 }
 

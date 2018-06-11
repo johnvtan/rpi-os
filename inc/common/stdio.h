@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+void putc(const unsigned char c);
+void puts(const unsigned char *str);
 int printf(const char *fmt, ...);
 int sprintf(char *str, const char *fmt, ...);
 int sprintf(char *str, const char *fmt, ...);

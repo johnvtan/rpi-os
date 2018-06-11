@@ -53,7 +53,7 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 unsigned int strtonum(const char *str, const char **endptr) {
     unsigned int base = 10;
     unsigned int rv = 0;
-    char *str_ptr = str;
+    const char *str_ptr = str;
     
     // if str starts with 0x, then base 16. otherwise, base 10. 
     if (0 == strncmp(str, "0x", 2)) {
