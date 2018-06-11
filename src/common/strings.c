@@ -83,6 +83,39 @@ unsigned int strtonum(const char *str, const char **endptr) {
     return rv;
 }
 
+// reverses a string - used for numtostr
+char *reverse_str(char *str, size_t len) {
+    int start = 0;
+    int end = len - 1;
+    char temp = 0;
+    while (start < end) {
+        temp = *(str + start);
+        *(str + start) = *(str + end);
+        *(str + end) = temp;
+        ++start;
+        --end;
+    }
+    return str;
+}
+
+// transforms int i into string so that it can be printed more easily
+char *numtostr(unsigned int num, char *str, size_t *len) {
+    if (NULL == len) {
+        return NULL;
+    }
+
+    int remainder = 0;
+    int i = 0;
+    while (num) {
+        remainder = num % 10;
+        *(str + i++) = remainder + '0';
+        num = num / 10; 
+    }
+    *(str + i) = '\0';
+    *len = i - 1;
+    return reverse_str(str, i);
+}
+
 int strlcat(char *dst, const char *src, int maxsize) {
     return 0;
 }

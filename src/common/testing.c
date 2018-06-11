@@ -44,6 +44,9 @@ int test_strings(void) {
         uart_puts("atoui(0xABC) failed");
         ++fail_count;
     }
+
+    uart_puts(numtostr(strtonum("0xABC", &s2_ptr), s2_ptr, 4));
+    uart_putc('\n');
     return fail_count;
 }
 

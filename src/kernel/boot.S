@@ -3,7 +3,12 @@
 .globl _start
 
 _start:
-    // TODO: stop all but one cpu on reset
+    // stopping all cpus except cpu 0
+    mrc p15, #0, r1, c0, c0, #5
+    and r1, r1, #3
+    cmp r1, #0
+    bne halt
+
     // setup the stack starting at 0x8000
     mov sp, #0x8000
 
@@ -28,7 +33,7 @@ _start:
     ldr r3, =kernel_main
     blx r3
 
-    // halt
 halt:
+    // stop cpu
     wfe
     b halt
