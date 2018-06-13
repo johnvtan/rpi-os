@@ -63,7 +63,7 @@ int test_strings(void) {
     uart_puts(numtostr(strtonum("0xABC", &s2_ptr), s2_ptr, 4));
     uart_putc('\n');
     */
-    snprintf(s2_ptr, 20, "Hello %u, I am %u\n", 10000, 24512345);
+    snprintf(s2_ptr, 40, "Hello %u, I am %u\nabababa\n", 10000, 24512345);
     uart_puts(s2_ptr);
     return fail_count;
 }

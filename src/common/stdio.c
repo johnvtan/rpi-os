@@ -53,6 +53,8 @@ int snprintf(char *str, size_t size, const char *fmt, ...) {
             // curr should be u or x or some format character
             switch (curr) {
                 case 'u':
+                    // TODO: need to subtract the number of bytes that are copied here
+                    // from the total
                     numtostr(va_arg(args, unsigned int), replace, &arg_len);
                     memcpy(str, replace, arg_len);
                     str += arg_len;
