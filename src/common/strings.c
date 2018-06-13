@@ -112,7 +112,9 @@ char *numtostr(unsigned int num, char *str, size_t *len) {
         num = num / 10; 
     }
     *(str + i) = '\0';
-    *len = i - 1;
+
+    // TODO: is this the right length? 
+    *len = i;
     return reverse_str(str, i);
 }
 
