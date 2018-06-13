@@ -8,7 +8,7 @@ void putc(const unsigned char c);
 void puts(const unsigned char *str);
 int printf(const char *fmt, ...);
 int sprintf(char *str, const char *fmt, ...);
-int sprintf(char *str, const char *fmt, ...);
+int vsnprintf(char *str, size_t size, const char *fmt, va_list ap);
 int snprintf(char *str, size_t size, const char *fmt, ...);
 
 #endif

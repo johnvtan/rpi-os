@@ -65,6 +65,8 @@ int test_strings(void) {
     */
     snprintf(s2_ptr, 40, "Hello %u, I am %u\nabababa\n", 10000, 24512345);
     uart_puts(s2_ptr);
+
+    printf("\nHello, world: %u!\n", 1032);
     return fail_count;
 }
 
