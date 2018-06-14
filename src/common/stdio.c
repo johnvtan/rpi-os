@@ -7,7 +7,7 @@
 #include <kernel/uart0.h>
 
 // for now, we can't handle any more than 16 digit numbers
-#define SNPRINTF_MAX_DIGITS 16
+#define VSNPRINTF_MAX_DIGITS 16
 #define PRINTF_MAX_BUF_SIZE 1024
 
 void putc(const unsigned char c) {
@@ -26,31 +26,31 @@ int printf(const char *fmt, ...) {
 
     char buf[PRINTF_MAX_BUF_SIZE];
     vsnprintf(buf, PRINTF_MAX_BUF_SIZE, fmt, args);
-
     uart_puts(buf);
+    
     va_end(args);
     return 0;
 }
 
-int vsnprintf(char *str, size_t size, const char *fmt, va_list ap) {
-    snprintf(str, size, fmt, ap);
+int snprintf(char *str, size_t size, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(str, size, fmt, args);
+    va_end(args);
     return 0;
 }
 
 // for now, only handle %u, %c, %s
 // returns size of str?
-int snprintf(char *str, size_t size, const char *fmt, ...) {
+int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
     if (NULL == str) {
         return -1;
     }
-    
-    va_list args;
-    va_start(args, fmt);
 
     char curr = 0;
     int fmt_next = 0;
     size_t arg_len = 0;
-    char replace[SNPRINTF_MAX_DIGITS];
+    char replace[VSNPRINTF_MAX_DIGITS];
 
     const char *fmt_ptr = fmt;
     while ('\0' != (curr = *fmt_ptr++) && size--) {
@@ -82,6 +82,5 @@ int snprintf(char *str, size_t size, const char *fmt, ...) {
     }
     // need to end 
     *str = '\0';
-    va_end(args);
     return 0;
 }
