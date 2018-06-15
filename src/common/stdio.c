@@ -33,6 +33,9 @@ int printf(const char *fmt, ...) {
 }
 
 int snprintf(char *str, size_t size, const char *fmt, ...) {
+    if (size > PRINTF_MAX_BUF_SIZE) {
+        return -1;
+    }
     va_list args;
     va_start(args, fmt);
     vsnprintf(str, size, fmt, args);
@@ -48,6 +51,7 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
     }
 
     char curr = 0;
+    unsigned char test = 0;
     int fmt_next = 0;
     size_t arg_len = 0;
     char replace[VSNPRINTF_MAX_DIGITS];
@@ -60,13 +64,16 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
                 case 'u':
                     // TODO: need to subtract the number of bytes that are copied here
                     // from the total
-                    numtostr(va_arg(args, unsigned int), replace, &arg_len);
+                    numtostr((unsigned int)va_arg(args, unsigned int), replace, &arg_len);
                     memcpy(str, replace, arg_len);
                     str += arg_len;
                     break;
                 case 'x':
                     break;
                 case 'c':
+                    // va_arg() needs the type passed in to be int and then cast to (char)
+                    // can't, e.g., call va_arg(args, char) - otherwise it doesn't return!
+                    *str++ = (char)va_arg(args, int);
                     break;
                 case 's':
                     break;

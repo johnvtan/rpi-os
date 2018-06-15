@@ -66,7 +66,10 @@ int test_strings(void) {
     snprintf(s2_ptr, 40, "Hello %u, I am %u\nabababa\n", 10000, 24512345);
     uart_puts(s2_ptr);
 
+    unsigned char test = 'c';
+    printf("Hello %c,\n", test);
     printf("\nHello, world: %u!\n", 1032);
+    printf("This is a tes%c\n", 't');
     return fail_count;
 }
 
