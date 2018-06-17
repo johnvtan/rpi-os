@@ -121,3 +121,12 @@ char *numtostr(unsigned int num, char *str, size_t *len) {
 int strlcat(char *dst, const char *src, int maxsize) {
     return 0;
 }
+
+// my version of strcpy returns the size of the string
+char *strcpy(char *dst, const char *src) {
+    char *rv = dst;
+    while ('\0' != *src) {
+        *dst++ = *src++;
+    }
+    return rv;
+}

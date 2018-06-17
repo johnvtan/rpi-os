@@ -51,16 +51,16 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
     }
 
     char curr = 0;
-    unsigned char test = 0;
     int fmt_next = 0;
     size_t arg_len = 0;
     char replace[VSNPRINTF_MAX_DIGITS];
 
-    const char *fmt_ptr = fmt;
-    while ('\0' != (curr = *fmt_ptr++) && size--) {
+    while ('\0' != (curr = *fmt++) && size--) {
         if (fmt_next) {
             // curr should be u or x or some format character
             switch (curr) {
+                case 'd':   // for now, %d and %u mean the same thing.
+                            // it's annoying when I test and I forget I don't have %d, only %u
                 case 'u':
                     // TODO: need to subtract the number of bytes that are copied here
                     // from the total
@@ -75,9 +75,15 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
                     // can't, e.g., call va_arg(args, char) - otherwise it doesn't return!
                     *str++ = (char)va_arg(args, int);
                     break;
-                case 's':
+                case 's': ; // empty statement since declarations can't follow labels in C
+                    char *new_str = va_arg(args, char *);
+                    strcpy(str, new_str);
+                    str += strlen(new_str);
                     break;
                 default:
+                    puts("Unrecognized format specifier: ");
+                    putc(curr);
+                    putc('\n');
                     break;
             }
             fmt_next = 0;
@@ -87,7 +93,7 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
             *str++ = curr;
         }
     }
-    // need to end 
+    // need to add null terminating character
     *str = '\0';
     return 0;
 }

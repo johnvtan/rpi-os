@@ -11,5 +11,6 @@ unsigned int strtonum(const char *str, const char **endptr);
 char *reverse_str(char *str, size_t len);
 char *numtostr(unsigned int num, char *str, size_t *len);
 int strlcat(char *dst, const char *src, int maxsize);
+char *strcpy(char *dst, const char *src);
 
 #endif
