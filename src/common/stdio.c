@@ -64,11 +64,14 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
                 case 'u':
                     // TODO: need to subtract the number of bytes that are copied here
                     // from the total
-                    numtostr((unsigned int)va_arg(args, unsigned int), replace, &arg_len);
+                    numtostr(va_arg(args, unsigned int), 10, replace, &arg_len);
                     memcpy(str, replace, arg_len);
                     str += arg_len;
                     break;
                 case 'x':
+                    numtostr(va_arg(args, unsigned int), 16, replace, &arg_len);
+                    memcpy(str, replace, arg_len);
+                    str += arg_len;
                     break;
                 case 'c':
                     // va_arg() needs the type passed in to be int and then cast to (char)

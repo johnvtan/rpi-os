@@ -84,7 +84,7 @@ unsigned int strtonum(const char *str, const char **endptr) {
 }
 
 // reverses a string - used for numtostr
-char *reverse_str(char *str, size_t len) {
+static char *reverse_str(char *str, size_t len) {
     int start = 0;
     int end = len - 1;
     char temp = 0;
@@ -99,17 +99,32 @@ char *reverse_str(char *str, size_t len) {
 }
 
 // transforms int i into string so that it can be printed more easily
-char *numtostr(unsigned int num, char *str, size_t *len) {
+char *numtostr(unsigned int num, unsigned int base, char *str, size_t *len) {
     if (NULL == len) {
+        return NULL;
+    }
+
+    // we only handle base 10 or 16
+    if (10 != base && 16 != base) {
         return NULL;
     }
 
     int remainder = 0;
     int i = 0;
+    
     while (num) {
-        remainder = num % 10;
-        *(str + i++) = remainder + '0';
-        num = num / 10; 
+        remainder = num % base;
+        if (remainder < 10) {
+            str[i++] = remainder + '0';
+        } else if (16 == base) {
+            // then we handle base A-F in base 16
+            str[i++] = remainder - 10 + 'A';
+        } else {
+            // for now, we just end the string at some unrecognized
+            // digit
+            break;
+        }
+        num = num / base; 
     }
     *(str + i) = '\0';
 

@@ -40,12 +40,14 @@ int test_strings(void) {
         ++fail_count;
     }
 
+    /*
     s2_ptr = numtostr(123, s2_ptr, &s2_size);
     if (s2_size < 3) {
         uart_puts("numtostr len too small.\n");
     } else if (s2_size > 3) {
         uart_puts("numtostr len too big\n");
     }
+    */
 
     /*
     if (0xABC != strtonum("0xABC", &s2_ptr)) {
@@ -63,8 +65,11 @@ int test_strings(void) {
     uart_puts(numtostr(strtonum("0xABC", &s2_ptr), s2_ptr, 4));
     uart_putc('\n');
     */
+    printf("%s\n", numtostr(1234, 10, s2_ptr, &s2_size));
+    printf("%s\n", numtostr(0xABCD, 16, s2_ptr, &s2_size));
     printf("%s\n", "this is a test");
     printf("%s abc %u\n", "Keeping it", 100);
+    printf("Hello my name is %x\n", 0xFFFF);
     return fail_count;
 }
 
