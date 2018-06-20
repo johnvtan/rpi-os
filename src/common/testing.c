@@ -70,6 +70,11 @@ int test_strings(void) {
     printf("%s\n", "this is a test");
     printf("%s abc %u\n", "Keeping it", 100);
     printf("Hello my name is %x\n", 0xFFFF);
+
+    if (6 != printf("ABC%x\n", 0xFF)) {
+        printf("Oh no what did you do\n");
+        ++fail_count;
+    }
     return fail_count;
 }
 

@@ -21,26 +21,28 @@ void puts(const unsigned char *str) {
 }
 
 int printf(const char *fmt, ...) {
+    int rv;
     va_list args;
     va_start(args, fmt);
 
     char buf[PRINTF_MAX_BUF_SIZE];
-    vsnprintf(buf, PRINTF_MAX_BUF_SIZE, fmt, args);
+    rv = vsnprintf(buf, PRINTF_MAX_BUF_SIZE, fmt, args);
     uart_puts(buf);
     
     va_end(args);
-    return 0;
+    return rv;
 }
 
 int snprintf(char *str, size_t size, const char *fmt, ...) {
     if (size > PRINTF_MAX_BUF_SIZE) {
         return -1;
     }
+    int rv;
     va_list args;
     va_start(args, fmt);
-    vsnprintf(str, size, fmt, args);
+    rv = vsnprintf(str, size, fmt, args);
     va_end(args);
-    return 0;
+    return rv;
 }
 
 // for now, only handle %u, %c, %s
@@ -54,6 +56,7 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
     int fmt_next = 0;
     size_t arg_len = 0;
     char replace[VSNPRINTF_MAX_DIGITS];
+    char *str_start = str; 
 
     while ('\0' != (curr = *fmt++) && size--) {
         if (fmt_next) {
@@ -84,9 +87,6 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
                     str += strlen(new_str);
                     break;
                 default:
-                    puts("Unrecognized format specifier: ");
-                    putc(curr);
-                    putc('\n');
                     break;
             }
             fmt_next = 0;
@@ -98,5 +98,7 @@ int vsnprintf(char *str, size_t size, const char *fmt, va_list args) {
     }
     // need to add null terminating character
     *str = '\0';
-    return 0;
+
+    // return size of formatted string
+    return (str - str_start);
 }
