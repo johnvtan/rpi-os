@@ -27,7 +27,7 @@ int printf(const char *fmt, ...) {
 
     char buf[PRINTF_MAX_BUF_SIZE];
     rv = vsnprintf(buf, PRINTF_MAX_BUF_SIZE, fmt, args);
-    uart_puts(buf);
+    puts((unsigned char*)buf);
     
     va_end(args);
     return rv;
