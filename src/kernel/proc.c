@@ -6,6 +6,7 @@ typedef struct {
     uint32_t cpsr;
     uint32_t sp;
     uint32_t lr;
+    uint32_t pc;
 } proc_state_t;
 
 typedef struct {
