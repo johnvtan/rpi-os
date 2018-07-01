@@ -1,4 +1,4 @@
-# context switch assembly funcition (from https://jsandler18.github.io/tutorial/process.html)
+# context switch assembly function (from https://jsandler18.github.io/tutorial/process.html)
 # pushes r0-r12 and cpsr onto the stack
 # the function prototype for this would be:
 # void context_switch(proc_control_block_t *p1, proc_control_block_t *p2)
@@ -37,17 +37,13 @@ context_switch:
 # Instead, I should be manually loading/storing from an offset from r0/r1
 # to save/load registers. 
 
-# I still am not sure how it starts running the new process. The link register
-# gets put into the PC, so it starts running from where the link register says.
-# But what's in the link register? Maybe that's the source of the confusion for me.
+# When I implement dynamic process creation, I'll need to change the context switch
+# to point to wherever on the stack the saved state exists. I'll also need to add stuff
+# for process creation, which actually puts the saved state on the stack.
 
-# It would make more sense to me to save the PC value somewhere and load that into 
-# the current PC, but I don't understand why that doesn't happen.
+# OK, so I should set the PC to the saved state's LR since it should jump back to
+# the instruction after the yield() call (or later exception), which is what LR stores.
 
-# He is probably saving the LR to the PC since in his code, context switches are
-# only called during timer interrupts, so the PC would point to code in the IRQ handler
-# and the LR would be pointing to where the program should resume running.
-
-# So since I'm doing cooperative scheduling right now, I should be saving/restoring
-# the PC value because the LR doesn't really do anything for me as of now.
-# Also still need to figure out the stack stuff
+# I think for now I can safely make a few assumptions about the system. Ie, the processes
+# will run forever (so no need to deal with clean up yet), they are known at compile time,
+# and really all I'm trying to get working is the cooperative context switching stuff. 
