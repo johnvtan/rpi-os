@@ -11,7 +11,8 @@
 context_switch:
 
     // save link reg, sp
-    push    {lr, sp}
+    push    {lr}
+    push    {sp}
 
     // r12 is caller-save, so we can mess with it
     // save current process state reg in r12

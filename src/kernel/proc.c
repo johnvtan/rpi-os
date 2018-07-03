@@ -24,7 +24,7 @@ extern void context_switch(proc_control_block_t *p1, proc_control_block_t *p2);
 static proc_control_block_t pcb[PCB_LEN];
 static proc_state_t process_states[PCB_LEN];
 
-// index into pcb
+// index into pcb/process_states array
 static int curr_proc_handle;   
 
 void yield(void);
@@ -57,6 +57,7 @@ void proc_init(void) {
     // zero out registers
     int i = 0;
     for (i = 0; i < PCB_LEN; i++) {
+        // zero out saved state. not sure if necessary
         memset(&process_states[i], 0, sizeof(proc_state_t));
         
         // set pcb state to point to where process states is stored in memory
@@ -80,15 +81,16 @@ void proc_init(void) {
 void proc_run_next(void) {
     // need handles for previous and current process
     int prev_proc_handle = curr_proc_handle++;
-    if (PCB_LEN == curr_proc_handle) {
+    if (curr_proc_handle >= PCB_LEN) {
         curr_proc_handle = 0;
     }
-
+    printf("Switching from task %d to %d: ", prev_proc_handle+1, curr_proc_handle+1);
     // switch from previous to current
-    context_switch(&pcb[prev_proc_handle], &pcb[curr_proc_handle]);
-
+    context_switch(&pcb[prev_proc_handle], &pcb[curr_proc_handle]); 
+    //asm volatile("nop");
+    printf("Context switch failed???\n");
     // shouldn't ever get here, since when we switch, we run the other task
-    return;
+    //return;
 }
 
 // cooperative scheduling - allows a running process to give up CPU
