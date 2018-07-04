@@ -28,7 +28,7 @@ build: directories program
 directories:
 	mkdir -p $(OBJ_DIR)
 
-program: $(OBJECTS) $(HEADERS)
+program: $(OBJECTS)
 	$(CC) -T linker.ld -o $(IMG_NAME) $(LFLAGS) $(OBJECTS)
 
 $(OBJ_DIR)/%.o: $(KERN_SRC_DIR)/%.c
