@@ -20,7 +20,6 @@ ASM_SRCS = $(wildcard $(KERN_SRC_DIR)/*.S)
 OBJECTS = $(patsubst $(KERN_SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(KERN_SRCS))
 OBJECTS += $(patsubst $(COMMON_SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(COMMON_SRCS))
 OBJECTS += $(patsubst $(KERN_SRC_DIR)/%.S, $(OBJ_DIR)/%.o, $(ASM_SRCS))
-HEADERS = $(wildcard $(KERN_HEAD_DIR)/*.h)
 
 IMG_NAME = kernel.elf
 
