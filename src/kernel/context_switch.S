@@ -10,6 +10,9 @@
 
 context_switch:
 
+    // since I'm statically allocating tasks
+    ldr sp, [r0]
+
     // save link reg, sp
     push    {lr}
     push    {sp}
@@ -23,7 +26,7 @@ context_switch:
 
     // store the stack pointer back at the memory address in r0, which is pcb[prev_proc_handle].state
     // and load memory address from r1, which is pcb[curr_proc_handle].state
-    str     sp, [r0]
+    //str     sp, [r0]
     ldr     sp, [r1]
 
     // with new sp, pop r0-r12

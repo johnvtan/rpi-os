@@ -9,7 +9,6 @@ int strlen(const char *s);
 int strncmp(const char *s1, const char *s2, size_t n);
 unsigned int strtonum(const char *str, const char **endptr);
 char *numtostr(unsigned int num, unsigned int base, char *str, size_t *len);
-int strlcat(char *dst, const char *src, int maxsize);
 char *strcpy(char *dst, const char *src);
 
 #endif

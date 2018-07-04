@@ -68,7 +68,7 @@ unsigned int strtonum(const char *str, const char **endptr) {
     // and add the new digit to the new ones place 
     while (len--) {
         new_char = *str_ptr++;
-        if (new_char > '0' && new_char < '9') {
+        if (new_char >= '0' && new_char <= '9') {
             new_digit = new_char - '0';
         } else if (new_char >= 'A' && new_char <= 'F' && base == 16) {
             new_digit = 10 + new_char - 'A';
@@ -112,7 +112,8 @@ char *numtostr(unsigned int num, unsigned int base, char *str, size_t *len) {
     int remainder = 0;
     int i = 0;
     
-    while (num) {
+    // changed to be infinite loop with break so that it will handle num = 0
+    for (;;) {
         remainder = num % base;
         if (remainder < 10) {
             str[i++] = remainder + '0';
@@ -124,17 +125,14 @@ char *numtostr(unsigned int num, unsigned int base, char *str, size_t *len) {
             // digit
             break;
         }
-        num = num / base; 
+        num = num / base;
+        if (!num) {
+            break;
+        } 
     }
     *(str + i) = '\0';
-
-    // TODO: is this the right length? 
     *len = i;
     return reverse_str(str, i);
-}
-
-int strlcat(char *dst, const char *src, int maxsize) {
-    return 0;
 }
 
 // my version of strcpy returns the size of the string

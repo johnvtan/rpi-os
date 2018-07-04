@@ -23,13 +23,12 @@ HEADERS = $(wildcard $(KERN_HEAD_DIR)/*.h)
 
 IMG_NAME = kernel.elf
 
-build: clean directories program
+build: directories program
 
 directories:
 	mkdir -p $(OBJ_DIR)
 
 program: $(OBJECTS) $(HEADERS)
-	echo $(OBJECTS)
 	$(CC) -T linker.ld -o $(IMG_NAME) $(LFLAGS) $(OBJECTS)
 
 $(OBJ_DIR)/%.o: $(KERN_SRC_DIR)/%.c
