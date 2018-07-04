@@ -1,9 +1,11 @@
 ARCH = arm-none-eabi-
 CC = $(ARCH)gcc
+QEMU = qemu-system-arm
 
 CPUFLAG = cortex-a7
 CFLAGS = -mcpu=$(CPUFLAG) -Wall -Wextra -O2 -ffreestanding -fpic -std=gnu99
 LFLAGS = -ffreestanding -nostdlib -O2
+QEMUFLAGS = -serial stdio -m 256 -M raspi2
 
 KERN_SRC_DIR = ../src/kernel
 KERN_HEAD_DIR = ../inc
@@ -40,12 +42,13 @@ $(OBJ_DIR)/%.o: $(KERN_SRC_DIR)/%.S
 	$(CC) $(CFLAGS) -I$(KERN_SRC_DIR) -c $< -o $@
 
 run: build
-	qemu-system-arm -M raspi2 -kernel $(IMG_NAME) -serial stdio -m 256
-
-all: build
+	$(QEMU) $(QEMUFLAGS) -kernel $(IMG_NAME)
 
 debug: CFLAGS += -g -DDEBUG
-debug: build
+debug: QEMUFLAGS += -s -S
+debug: run
+
+all: build
 
 clean:
 	rm -rf $(OBJ_DIR)
