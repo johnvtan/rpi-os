@@ -1,5 +1,6 @@
 ARCH = arm-none-eabi-
 CC = $(ARCH)gcc
+GDB = $(ARCH)gdb
 QEMU = qemu-system-arm
 
 CPUFLAG = cortex-a7
@@ -45,7 +46,9 @@ run: build
 
 debug: CFLAGS += -g -DDEBUG
 debug: QEMUFLAGS += -s -S
-debug: run
+debug: 
+	$(QEMU) $(QEMUFLAGS) -kernel $(IMG_NAME) &
+	$(GDB) --command=debug.gdb
 
 all: build
 
