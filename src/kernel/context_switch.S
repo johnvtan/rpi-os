@@ -21,15 +21,16 @@ context_switch:
     str     lr, [r0], #4
 
     // loading state from next task
+    // I use sp here since I was having problems with r1 getting overwritten
+    // when I load saved state's values
     ldr     sp, [r1]
     ldmia   sp!, {r0-r11}
     ldr     r12, [sp], #4
     msr     cpsr_c, r12
-    mov     r1, sp
-    ldr     lr, [r1], #4
+    ldr     lr, [sp], #4
 
     // load task's lr into pc to jump to that task
-    ldr     pc, [r1], #4
+    ldr     pc, [sp], #4
 
 
 /*
