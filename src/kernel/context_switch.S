@@ -10,11 +10,11 @@
 .globl context_switch
 
 context_switch:
-    // saving state from previous task
     
-    // dereferencing pointers to saved state
+    // dereferencing pointer to saved state
     ldr     r0, [r0]
 
+    // saving state of previous task
     mrs     r12, cpsr
     stmia   r0!, {r0-r12}
     str     sp, [r0], #4
@@ -27,6 +27,8 @@ context_switch:
     msr     cpsr_c, r12
     mov     r1, sp
     ldr     lr, [r1], #4
+
+    // load task's lr into pc to jump to that task
     ldr     pc, [r1], #4
 
 
