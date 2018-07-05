@@ -45,7 +45,7 @@ run: build
 
 debug: CFLAGS += -g -DDEBUG
 debug: QEMUFLAGS += -s -S
-debug: 
+debug: build
 	$(QEMU) $(QEMUFLAGS) -kernel $(IMG_NAME) &
 	$(GDB) --command=debug.gdb
 

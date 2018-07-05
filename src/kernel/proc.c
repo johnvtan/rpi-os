@@ -71,14 +71,13 @@ void proc_init(void) {
     process_states[2].lr = (uint32_t)task3;
 
     // then I just call task1() to start it?
-    curr_proc_handle = 1;
-    task2();
+    curr_proc_handle = 2;
+    task3();
 
     // shouldn't get here
-    return;
 }
 
-void proc_run_next(void) {
+void yield(void) {
     // need handles for previous and current process
     int prev_proc_handle = curr_proc_handle++;
     if (curr_proc_handle >= PCB_LEN) {
@@ -87,17 +86,12 @@ void proc_run_next(void) {
     printf("Switching from task %d to %d: ", prev_proc_handle+1, curr_proc_handle+1);
     // switch from previous to current
     context_switch(&pcb[prev_proc_handle], &pcb[curr_proc_handle]); 
-    //asm volatile("nop");
-    printf("Context switch failed???\n");
-    // shouldn't ever get here, since when we switch, we run the other task
-    //return;
-}
 
-// cooperative scheduling - allows a running process to give up CPU
-// QEMU doesn't support rpi system timer and I'm at home without my physical RPI
-// so I'm doing this for now
-void yield(void) {
-    // TODO: save context on stack, load other context
-    // I guess for now this is all we do?
-    proc_run_next();
+    // It is important that context_switch is the last line in this function,
+    // otherwise the link register doesn't get set correctly, ie, if I put a print
+    // then when we return to some task, it will jump to that print statement
+    // since the link register will be set when we call context_switch
+    // if there's no instructions here, the link register doesn't get changed
+    // so it will be the correct instruction in the task that called yield()
+    return;
 }

@@ -6,12 +6,35 @@
 // we switch from p1 to p2
 // ARM calling convention is that first 4 params are stored in r0-r3, rest on stack
 // so p1 is in r0 and p2 is in r1
+
 .globl context_switch
 
 context_switch:
+    // saving state from previous task
+    
+    // dereferencing pointers to saved state
+    ldr     r0, [r0]
+
+    mrs     r12, cpsr
+    stmia   r0!, {r0-r12}
+    str     sp, [r0], #4
+    str     lr, [r0], #4
+
+    // loading state from next task
+    ldr     sp, [r1]
+    ldmia   sp!, {r0-r11}
+    ldr     r12, [sp], #4
+    msr     cpsr_c, r12
+    mov     r1, sp
+    ldr     lr, [r1], #4
+    ldr     pc, [r1], #4
+    nop
+
+/*
+context_switch:
 
     // since I'm statically allocating tasks
-    ldr sp, [r0]
+    //ldr sp, [r0]
 
     // save link reg, sp
     push    {lr}
@@ -26,7 +49,7 @@ context_switch:
 
     // store the stack pointer back at the memory address in r0, which is pcb[prev_proc_handle].state
     // and load memory address from r1, which is pcb[curr_proc_handle].state
-    //str     sp, [r0]
+    str     sp, [r0]
     ldr     sp, [r1]
 
     // with new sp, pop r0-r12
@@ -44,3 +67,4 @@ context_switch:
     // but later it should not be too difficult to implement tasks that can terminate
     // and this lr points to some task cleanup function.
     pop     {lr, pc}
+*/
