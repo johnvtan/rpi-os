@@ -18,7 +18,7 @@ typedef struct {
 
 extern void context_switch(proc_control_block_t *p1, proc_control_block_t *p2);
 
-#define PCB_LEN 3
+#define PCB_LEN 5
 
 // for now, just have two tasks running that are known at compile time
 static proc_control_block_t pcb[PCB_LEN];
@@ -51,6 +51,20 @@ static void task3(void) {
     }
 }
 
+static void task4(void) {
+    while (1) {
+        printf("Task 4 running\n");
+        yield();
+    }
+}
+
+static void task5(void) {
+    while (1) {
+        printf("Task 5 running\n");
+        yield();
+    }
+}
+
 // initializes processes - because we don't have any memory management yet,
 // all processes need to be known at compile time
 void proc_init(void) {
@@ -69,10 +83,12 @@ void proc_init(void) {
     process_states[0].lr = (uint32_t)task1;
     process_states[1].lr = (uint32_t)task2;
     process_states[2].lr = (uint32_t)task3;
+    process_states[3].lr = (uint32_t)task4;
+    process_states[4].lr = (uint32_t)task5;
 
     // then I just call task1() to start it?
-    curr_proc_handle = 2;
-    task3();
+    curr_proc_handle = 4;
+    task5();
 
     // shouldn't get here
 }

@@ -1,4 +1,4 @@
-// context switch assembly function (from https://jsandler18.github.io/tutorial/process.html)
+// context switch assembly function
 
 // pushes r0-r12 and cpsr onto the stack
 // the function prototype for this would be:
@@ -28,9 +28,13 @@ context_switch:
     mov     r1, sp
     ldr     lr, [r1], #4
     ldr     pc, [r1], #4
-    nop
+
 
 /*
+// this version (from https://jsandler18.github.io/tutorial/process.html) doesn't
+// work with my code right now since I'm storing process states differently (ie, static allocation, 
+// no stack for each kernel thread). When I get some form of memory management working, this will
+// probably work better.
 context_switch:
 
     // since I'm statically allocating tasks
