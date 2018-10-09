@@ -1,0 +1,2 @@
+- Figure out how I want to deal with memory (free/used list)
+- Implement generic/extensible linked list (ideally not using macros)
