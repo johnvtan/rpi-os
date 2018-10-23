@@ -66,6 +66,6 @@ int free_page(void *page) {
         return -1;
     }
     page_array[page_index].flags.used = 0;
-    page_array[page_index].flags.kernel = 1;
+    page_array[page_index].flags.kernel = 0;
     return 0;
 }
