@@ -2,3 +2,4 @@
 build/objects
 *.elf
 *.gdb_history
+*.swp
