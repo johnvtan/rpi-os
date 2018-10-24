@@ -1,5 +1,4 @@
-#include <common/testing.h>
-/* Module for testing implemented functions */
+#include <testing/testing.h>
 #include <common/strings.h>
 #include <common/stdio.h>
 #include <kernel/uart0.h>
