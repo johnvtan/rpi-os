@@ -11,10 +11,9 @@
 
 void kernel_main(void) {
     uart0_init();
+    mem_init();
 #ifdef TEST
-    if (!test_strings()) {
-        uart_puts("All tests passed\n\r");
-    }
+    run_tests();
 #else
     printf("Starting tasks...\n");
     proc_init();

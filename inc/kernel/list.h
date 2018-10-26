@@ -62,6 +62,13 @@ static inline int list_delete(struct list_node *entry) {
     return 0;
 }
 
+// method for popping the head off and returning the new head
+static inline struct list_node* list_pop_head(struct list_node *head) {
+    struct list_node *new_head = head->next;
+    list_delete(head);
+    return new_head;
+}
+
 /*
  * This macro infers the address of the type containing the list node
  * using the name of the type and the name of the list_node member in that struct

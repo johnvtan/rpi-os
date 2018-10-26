@@ -2,8 +2,24 @@
 #include <common/strings.h>
 #include <common/stdio.h>
 #include <kernel/uart0.h>
+#include <kernel/mem.h>
+
+#define ASSERT(expr, msg) { if (!(expr)) { printf("Assertion failed: "); printf(msg); while(1); } }
 
 // all tests return 0 if they pass, -1 if they fail
+int run_tests(void) {
+    if (0 != test_strings()) {
+        printf("test_strings() failed");
+        return -1;
+    }
+    if (0 != test_mem()) {
+        printf("test_mem() failed");
+        return -1;
+    }
+
+    printf("Congrats! All tests passed.");
+    return 0;
+}
 
 // test functions implemented in strings
 // returns number of functions that failed testing
@@ -77,7 +93,17 @@ int test_strings(void) {
     return fail_count;
 }
 
-// test functions implemented in printf
-int test_printf(void) {
+int test_mem(void) {
+    void *first_ptr = allocate_page();
+    printf("Value of first free page: %u\n", (uint32_t)first_ptr);
+    void *second_ptr = 0;
+    ASSERT(first_ptr != 0, "could not allocate page?");
+    uint32_t first_ptr_address = (uint32_t)first_ptr;
+    free_page(first_ptr);
+    ASSERT(first_ptr == 0, "could not free page");
+    second_ptr = allocate_page();
+    printf("Value of second free page: %u\n", (uint32_t)second_ptr);
+    ASSERT(second_ptr != 0, "could not allocate page");
     return 0;
 }
+

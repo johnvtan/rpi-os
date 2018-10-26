@@ -11,20 +11,15 @@
 #define KERNEL_HEAP_SIZE (1024 * 1024)
 
 typedef struct {
-    uint32_t used : 1;
-    uint32_t kernel : 1;
-    uint32_t reserved : 30;
+    uint8_t used : 1;
+    uint8_t kernel : 1;
+    uint8_t reserved : 6;
 } page_flags_t;
 
 typedef struct {
-    uint32_t address;
     page_flags_t flags;
-} page_t;
-
-typedef struct {
-    page_t page;
     struct list_node *node;
-} page_list_t;
+} page_t;
 
 int mem_init(atag_t *atags);
 void *allocate_page(void);
