@@ -1,3 +1,1 @@
-Test if pages are properly being allocated/freed
-Implement dynamic memory allocator for kernel heap
-Be able to dynamically spawn a process and allocate memory for it
+Fix the page allocator!!!
