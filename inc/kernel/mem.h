@@ -18,7 +18,7 @@ typedef struct {
 
 typedef struct {
     page_flags_t flags;
-    struct list_node *node;
+    struct list_node node;
 } page_t;
 
 int mem_init(atag_t *atags);

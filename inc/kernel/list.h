@@ -27,9 +27,16 @@ static inline int __list_add(struct list_node *entry, struct list_node *prev, st
     if (NULL == entry || NULL == prev || NULL == next) {
         return -1;
     }
+
+    /*
+    if (next == prev) {
+        next->next = entry;
+    }
+    */
+    next->prev = entry;
     entry->next = next;
     entry->prev = prev;
-    next->prev = entry;
+    prev->next = entry;
     return 0;
 }
 

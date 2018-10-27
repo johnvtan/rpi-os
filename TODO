@@ -1,1 +1,2 @@
 Fix the page allocator!!!
+Wow page linked list gets initialized really wrong

@@ -35,7 +35,7 @@ int mem_init(atag_t *atags) {
 
     // a little confusing, but all the kernel pages are marked as used, 
     // so the free_page_list_head should be the first non kernel page
-    free_page_list_head = page_array[kernel_pages].node;
+    free_page_list_head = &page_array[kernel_pages].node;
     list_init(free_page_list_head);
 
     // initialize all the memory metadata
@@ -46,7 +46,7 @@ int mem_init(atag_t *atags) {
         } else {
             // Add new node as tail so that we preserve sequential order
             // This should be okay even if it's the head we're adding to itself
-            list_add_tail(free_page_list_head, page_array[i].node);
+            list_add_tail(free_page_list_head, &page_array[i].node);
             page_array[i].flags.used = 0;
             page_array[i].flags.kernel = 0;
         }
@@ -93,7 +93,7 @@ int free_page(void *page) {
     page_array[page_index].flags.used = 0;
     page_array[page_index].flags.kernel = 0;
 
-    list_add_tail(free_page_list_head, page_array[page_index].node);
+    list_add_tail(free_page_list_head, &page_array[page_index].node);
     // also set the freed page ptr to NULL 
     page = NULL;
     return 0;

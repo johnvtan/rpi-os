@@ -4,8 +4,8 @@ GDB = $(ARCH)gdb
 QEMU = qemu-system-arm
 
 CPUFLAG = cortex-a7
-CFLAGS = -mcpu=$(CPUFLAG) -Wall -Wextra -O2 -ffreestanding -fpic -std=gnu99
-LFLAGS = -ffreestanding -nostdlib -O2
+CFLAGS = -mcpu=$(CPUFLAG) -Wall -Wextra -O0 -ffreestanding -fpic -std=gnu99
+LFLAGS = -ffreestanding -nostdlib -O0
 QEMUFLAGS = -serial stdio -m 256 -M raspi2
 
 KERN_SRC_DIR = ../src/kernel
@@ -57,8 +57,8 @@ run: build
 debug: CFLAGS += -g -DDEBUG
 debug: QEMUFLAGS += -s -S
 debug: build
-	$(QEMU) $(QEMUFLAGS) -kernel $(IMG_NAME) &
-	$(GDB) --command=debug.gdb
+	$(QEMU) $(QEMUFLAGS) -kernel $(IMG_NAME)
+	#$(GDB) --command=debug.gdb
 
 all: build
 
