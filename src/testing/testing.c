@@ -100,7 +100,6 @@ int test_mem(void) {
     ASSERT(first_ptr != 0, "could not allocate page?");
     uint32_t first_ptr_address = (uint32_t)first_ptr;
     free_page(first_ptr);
-    ASSERT(first_ptr == 0, "could not free page");
     second_ptr = allocate_page();
     printf("Value of second free page: %u\n", (uint32_t)second_ptr);
     ASSERT(second_ptr != 0, "could not allocate page");

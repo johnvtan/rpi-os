@@ -82,9 +82,9 @@ void *allocate_page(void) {
     return rv;
 }
 
-int free_page(void *page) {
+int free_page(void *address) {
     // the page we get is the address we want to free
-    uint32_t page_index = (uint32_t)((uint32_t)page / PAGE_SIZE);
+    uint32_t page_index = (uint32_t)((uint32_t)address / PAGE_SIZE);
 
     // if that page wasn't allocated in the first place, return 
     if (page_array[page_index].flags.used == 0) {
@@ -94,7 +94,6 @@ int free_page(void *page) {
     page_array[page_index].flags.kernel = 0;
 
     list_add_tail(free_page_list_head, &page_array[page_index].node);
-    // also set the freed page ptr to NULL 
-    page = NULL;
+
     return 0;
 }
