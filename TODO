@@ -1,2 +1,27 @@
-Fix the page allocator!!!
-Wow page linked list gets initialized really wrong
+Now that page allocator works, start on kmalloc() and kfree() so I can get dynamic processes.
+
+Also read up more on virtual memory so that once I have process actually being allocated, they can have their own
+memory space.
+
+Then file system driver and also emmc driver 
+
+Once dynamic process creation is working, then a real scheduler (even if all context switching is cooperative rn) is
+after
+
+Then, implement interrupts and a timer interrupt to attach to the scheduler
+
+After interrupts, add privileges I think
+
+Then syscalls?
+
+Synchronization primitives?
+
+I'm going to call this project done when I have all of this working in reasonable shape. Is this too much?
+
+Questions about virtual memory:
+    - How do I compile and link a program for virtual memory and have it loaded with my kernel?
+        - Can I just compile it to an ELF file and then what? How does it get loaded with the kernel?
+        - If I had a file system then I guess I could have the OS load it from there??
+    - After it's initialized how do I tell it when I'm in the kernel and don't need to do any mapping vs when I'm a user
+    and need to be mapped?
+    - How exactly do I initialize it? 
